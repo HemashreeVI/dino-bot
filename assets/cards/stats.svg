@@ -18,13 +18,13 @@
 
 <defs>
   <radialGradient id="stats-bg" cx="70%" cy="30%" r="90%">
-    <stop offset="0" stop-color="#12241B"/>
-    <stop offset=".55" stop-color="#0C1712"/>
-    <stop offset="1" stop-color="#07100C"/>
+    <stop offset="0" stop-color="#13204A"/>
+    <stop offset=".55" stop-color="#0A1024"/>
+    <stop offset="1" stop-color="#060914"/>
   </radialGradient>
   <radialGradient id="stats-glowA" cx="50%" cy="50%" r="50%">
-    <stop offset="0" stop-color="#2FBF71" stop-opacity=".38"/>
-    <stop offset="1" stop-color="#2FBF71" stop-opacity="0"/>
+    <stop offset="0" stop-color="#4169E1" stop-opacity=".38"/>
+    <stop offset="1" stop-color="#4169E1" stop-opacity="0"/>
   </radialGradient>
   <radialGradient id="stats-glowB" cx="50%" cy="50%" r="50%">
     <stop offset="0" stop-color="#F5B461" stop-opacity=".10"/>
@@ -32,21 +32,21 @@
   </radialGradient>
   <linearGradient id="stats-silver" x1="0" y1="0" x2="1" y2="0">
     <stop offset="0" stop-color="#FFFFFF"/>
-    <stop offset=".5" stop-color="#C3D6CB"/>
-    <stop offset="1" stop-color="#7FE0A8"/>
+    <stop offset=".5" stop-color="#C4CCE8"/>
+    <stop offset="1" stop-color="#8EA8FF"/>
   </linearGradient>
   <linearGradient id="stats-rule" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#7FE0A8" stop-opacity="0"/>
-    <stop offset=".25" stop-color="#7FE0A8" stop-opacity=".8"/>
-    <stop offset="1" stop-color="#7FE0A8" stop-opacity="0"/>
+    <stop offset="0" stop-color="#8EA8FF" stop-opacity="0"/>
+    <stop offset=".25" stop-color="#8EA8FF" stop-opacity=".8"/>
+    <stop offset="1" stop-color="#8EA8FF" stop-opacity="0"/>
   </linearGradient>
   <pattern id="stats-grid" width="28" height="28" patternUnits="userSpaceOnUse">
-    <path d="M28 0H0V28" fill="none" stroke="#7FE0A8" stroke-opacity=".05"/>
+    <path d="M28 0H0V28" fill="none" stroke="#8EA8FF" stroke-opacity=".05"/>
   </pattern>
 </defs>
 
-<rect x="1" y="1" width="1198" height="148" rx="22" fill="url(#stats-bg)" stroke="#1C3529"/>
+<rect x="1" y="1" width="1198" height="148" rx="22" fill="url(#stats-bg)" stroke="#1B2754"/>
 <rect x="1" y="1" width="1198" height="148" rx="22" fill="url(#stats-grid)"/>
 <ellipse cx="600" cy="75" rx="420" ry="105" fill="url(#stats-glowA)"/>
-<ellipse cx="600" cy="75" rx="300" ry="75" fill="url(#stats-glowB)"/><rect x="36" y="24" width="276" height="102" rx="16" fill="#0F1E17" stroke="#2A4D3B"/><text x="174" y="78" class="serif" font-size="38" fill="url(#stats-silver)" text-anchor="middle" >7,899</text><text x="174" y="104" class="sans" font-size="13" fill="#8EA99A" text-anchor="middle" >points in 7 min, 0 crashes</text><rect x="320" y="24" width="276" height="102" rx="16" fill="#0F1E17" stroke="#2A4D3B"/><text x="458" y="78" class="serif" font-size="38" fill="url(#stats-silver)" text-anchor="middle" >13.0</text><text x="458" y="104" class="sans" font-size="13" fill="#8EA99A" text-anchor="middle" >top game speed reached</text><rect x="604" y="24" width="276" height="102" rx="16" fill="#0F1E17" stroke="#2A4D3B"/><text x="742" y="78" class="serif" font-size="38" fill="url(#stats-silver)" text-anchor="middle" >200/s</text><text x="742" y="104" class="sans" font-size="13" fill="#8EA99A" text-anchor="middle" >decisions per second</text><rect x="888" y="24" width="276" height="102" rx="16" fill="#0F1E17" stroke="#2A4D3B"/><text x="1026" y="78" class="serif" font-size="38" fill="url(#stats-silver)" text-anchor="middle" >44</text><text x="1026" y="104" class="sans" font-size="13" fill="#8EA99A" text-anchor="middle" >lines of JavaScript</text>
+<ellipse cx="600" cy="75" rx="300" ry="75" fill="url(#stats-glowB)"/><rect x="36" y="24" width="276" height="102" rx="16" fill="#0D1630" stroke="#2B3D7C"/><text x="174" y="78" class="serif" font-size="38" fill="url(#stats-silver)" text-anchor="middle" >7,899</text><text x="174" y="104" class="sans" font-size="13" fill="#8D97BF" text-anchor="middle" >points in 7 min, 0 crashes</text><rect x="320" y="24" width="276" height="102" rx="16" fill="#0D1630" stroke="#2B3D7C"/><text x="458" y="78" class="serif" font-size="38" fill="url(#stats-silver)" text-anchor="middle" >13.0</text><text x="458" y="104" class="sans" font-size="13" fill="#8D97BF" text-anchor="middle" >top game speed reached</text><rect x="604" y="24" width="276" height="102" rx="16" fill="#0D1630" stroke="#2B3D7C"/><text x="742" y="78" class="serif" font-size="38" fill="url(#stats-silver)" text-anchor="middle" >200/s</text><text x="742" y="104" class="sans" font-size="13" fill="#8D97BF" text-anchor="middle" >decisions per second</text><rect x="888" y="24" width="276" height="102" rx="16" fill="#0D1630" stroke="#2B3D7C"/><text x="1026" y="78" class="serif" font-size="38" fill="url(#stats-silver)" text-anchor="middle" >44</text><text x="1026" y="104" class="sans" font-size="13" fill="#8D97BF" text-anchor="middle" >lines of JavaScript</text>
 </svg>

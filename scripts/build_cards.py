@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Builds the animated SVG cards used by the README.
 
-Same design language as my GitHub profile README, in an emerald + amber
+Same design language as my GitHub profile README, in a royal blue + amber
 palette. All text lives in the data section below; edit it and re-run:
 
     python3 scripts/build_cards.py
 
 Output goes to assets/cards/. Standard library only.
 """
+import json
+import math
 import random
 from pathlib import Path
 from xml.sax.saxutils import escape
@@ -17,21 +19,21 @@ OUT = ROOT / "assets" / "cards"
 
 # ---------------------------------------------------------------- palette
 C = {
-    "bg0": "#07100C",
-    "bg1": "#0C1712",
-    "bg2": "#12241B",
-    "panel": "#0F1E17",
-    "line": "#1C3529",
-    "line2": "#2A4D3B",
-    "accent": "#2FBF71",   # emerald (main colour)
-    "soft": "#7FE0A8",     # light green (kickers, highlights)
-    "pale": "#C6F4D9",
-    "silver": "#E8F1EC",
-    "mist": "#C3D6CB",
-    "muted": "#8EA99A",
-    "dim": "#5C7A69",
+    "bg0": "#060914",
+    "bg1": "#0A1024",
+    "bg2": "#13204A",
+    "panel": "#0D1630",
+    "line": "#1B2754",
+    "line2": "#2B3D7C",
+    "accent": "#4169E1",   # royal blue (main colour)
+    "soft": "#8EA8FF",     # light blue (kickers, highlights)
+    "pale": "#CFDAFF",
+    "silver": "#EAEEFA",
+    "mist": "#C4CCE8",
+    "muted": "#8D97BF",
+    "dim": "#5A6594",
     "amber": "#F5B461",    # second accent (desert sun)
-    "sky": "#8FD3F5",
+    "sky": "#6FE3D6",
 }
 
 SERIF = "'Iowan Old Style','Palatino Linotype',Palatino,Georgia,'Times New Roman',serif"
@@ -71,8 +73,8 @@ LESSONS = [
     ("Birds at three heights", "jumping into a mid-height bird ends the game, so heights are checked", "SOLVED"),
     ("Long jumps at top speed", "the dino landed on the next cactus; it now drops fast once clear", "SOLVED"),
     ("Different Chrome versions", "Runner.getInstance() in new Chrome, Runner.instance_ in old", "SOLVED"),
+    ("Neural network", "trained by evolution in the real game; see section 06", "SOLVED"),
     ("Screen-only version", "play using screenshots alone, without reading the game's code", "NEXT"),
-    ("Neural network (NEAT)", "let a model learn the game and race it against this bot", "NEXT"),
 ]
 
 TITLES = [
@@ -81,6 +83,8 @@ TITLES = [
     ("03", "THE RULES", "Jump, duck", "or run.", "ONE RULE PER OBSTACLE", "rules"),
     ("04", "TRY IT", "Run it", "yourself.", "NO INSTALL NEEDED", "try"),
     ("05", "LESSONS", "Problems I", "ran into.", "AND WHAT'S NEXT", "lessons"),
+    ("06", "NEURAL NETWORK", "It learned", "by itself.", "NEUROEVOLUTION", "nn"),
+    ("07", "SHOWDOWN", "Rules vs", "brain.", "WHO PLAYS BETTER?", "versus"),
 ]
 
 
@@ -494,6 +498,120 @@ def build_footer():
     write("footer.svg", svg(W, H, u, "Dino Bot", "Made by Hemashree. If it made you smile, leave a star.", body))
 
 
+# ---------------------------------------------------------------- neural network
+NN_LOG = ROOT / "nn" / "training-log.json"
+NN_BRAIN = ROOT / "nn" / "brain.json"
+NN_INPUTS = ["distance", "height", "width", "speed", "in air", "next gap", "bird?"]
+
+
+def build_network():
+    W, H, u = 1200, 360, "net"
+    w = json.loads(NN_BRAIN.read_text())["weights"]
+    nI, nH, nO = 7, 8, 3
+    col = lambda x, n, top, bot: [(x, top + (bot - top) * (i / (n - 1) if n > 1 else .5)) for i in range(n)]
+    I, Hd, O = col(300, nI, 70, 310), col(600, nH, 60, 320), col(900, nO, 120, 260)
+    lines, k = [], 0
+    for h in range(nH):
+        k += 1
+        for i in range(nI):
+            lines.append((I[i], Hd[h], w[k])); k += 1
+    for o in range(nO):
+        k += 1
+        for h in range(nH):
+            lines.append((Hd[h], O[o], w[k])); k += 1
+    parts = [frame(W, H, u, (0.5, 0.5))]
+    for n, (a, b, wt) in enumerate(lines):
+        c = C['accent'] if wt > 0 else C['amber']
+        op = min(.85, abs(wt) * .25 + .06)
+        parts.append(f'<line x1="{a[0]}" y1="{a[1]:.0f}" x2="{b[0]}" y2="{b[1]:.0f}" stroke="{c}" stroke-opacity="{op:.2f}" stroke-width="{min(3, abs(wt) * .6 + .4):.1f}"/>')
+    # a pulse travelling through the network
+    for n in range(6):
+        a, b, _ = lines[(n * 37) % len(lines)]
+        parts.append(f'<circle r="3" fill="#fff"><animateMotion dur="1.6s" begin="{n * .5:.1f}s" repeatCount="indefinite" path="M{a[0]} {a[1]:.0f}L{b[0]} {b[1]:.0f}"/></circle>')
+    for i, p in enumerate(I):
+        parts.append(f'<circle cx="{p[0]}" cy="{p[1]:.0f}" r="10" fill="{C["panel"]}" stroke="{C["soft"]}" stroke-width="1.5"/>')
+        parts.append(text(p[0] - 22, round(p[1] + 4), NN_INPUTS[i], 13, C['mist'], 'mono', 'end'))
+    for h, p in enumerate(Hd):
+        parts.append(f'<circle cx="{p[0]}" cy="{p[1]:.0f}" r="10" fill="{C["panel"]}" stroke="{C["soft"]}" stroke-width="1.5"/>')
+        parts.append(f'<circle cx="{p[0]}" cy="{p[1]:.0f}" r="5" fill="{C["pale"]}" class="pulse" style="animation-delay:{h * .3:.1f}s"/>')
+    for o, (p, name, colr) in enumerate(zip(O, ["JUMP", "DUCK", "RUN"], ["amber", "sky", "soft"])):
+        parts.append(f'<circle cx="{p[0]}" cy="{p[1]:.0f}" r="14" fill="{C["panel"]}" stroke="{C[colr]}" stroke-width="2"/>')
+        parts.append(f'<circle cx="{p[0]}" cy="{p[1]:.0f}" r="7" fill="{C[colr]}" class="pulse" style="animation-delay:{o * .8:.1f}s"/>')
+        parts.append(text(p[0] + 28, round(p[1] + 6), name, 17, C[colr], 'mono', 'start', 'font-weight="700" letter-spacing="2"'))
+    parts.append(text(300, 40, "7 INPUTS", 11, C['soft'], 'mono', 'middle', 'letter-spacing="3"'))
+    parts.append(text(600, 40, "8 HIDDEN", 11, C['soft'], 'mono', 'middle', 'letter-spacing="3"'))
+    parts.append(text(900, 40, "3 ACTIONS", 11, C['soft'], 'mono', 'middle', 'letter-spacing="3"'))
+    parts.append(text(1150, 330, f"{len(w)} weights · blue = excite · amber = inhibit", 11, C['muted'], 'mono', 'end'))
+    write("network.svg", svg(W, H, u, "The trained network",
+                             f"A neural network with 7 inputs ({', '.join(NN_INPUTS)}), 8 hidden neurons and 3 outputs (jump, duck, run); {len(w)} weights drawn as lines.", "".join(parts)))
+
+
+def build_curve():
+    W, H, u = 1200, 400, "curve"
+    log = json.loads(NN_LOG.read_text())["generations"]
+    gens = [g["generation"] for g in log]
+    best = [g["best"] for g in log]
+    avg = [g["average"] for g in log]
+    x0, x1, y0, y1 = 110, 1150, 330, 70
+    top = max(best)
+    lo, hi = math.log10(30), math.log10(top * 1.15)
+    X = lambda g: x0 + (x1 - x0) * (g - 1) / max(1, len(gens) - 1)
+    Y = lambda v: y0 - (y0 - y1) * (math.log10(max(v, 30)) - lo) / (hi - lo)
+    path = lambda vals: "M" + " L".join(f"{X(g):.1f} {Y(v):.1f}" for g, v in zip(gens, vals))
+    best_p = path(best)
+    area = best_p + f" L{X(gens[-1]):.1f} {y0} L{X(gens[0]):.1f} {y0} Z"
+    parts = [frame(W, H, u, (0.6, 0.4))]
+    parts.append(f'<defs><linearGradient id="curve-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{C["accent"]}" stop-opacity=".35"/><stop offset="1" stop-color="{C["accent"]}" stop-opacity="0"/></linearGradient>'
+                 '</defs>')
+    for v in [100, 1000, 10000]:
+        if v < top * 1.15:
+            parts.append(f'<line x1="{x0}" y1="{Y(v):.0f}" x2="{x1}" y2="{Y(v):.0f}" stroke="{C["line2"]}" stroke-dasharray="2 6"/>')
+            parts.append(text(x0 - 12, round(Y(v) + 4), f"{v:,}", 12, C['muted'], 'mono', 'end'))
+    for g in gens:
+        if g == 1 or g % 5 == 0:
+            parts.append(text(round(X(g)), y0 + 24, str(g), 12, C['muted'], 'mono', 'middle'))
+    parts.append(text((x0 + x1) // 2, y0 + 50, "GENERATION", 11, C['soft'], 'mono', 'middle', 'letter-spacing="3"'))
+    parts.append(f'<path d="{area}" fill="url(#curve-fill)"/>'
+                 f'<path d="{path(avg)}" fill="none" stroke="{C["amber"]}" stroke-width="2" stroke-dasharray="4 4"/>'
+                 f'<path d="{best_p}" fill="none" stroke="{C["soft"]}" stroke-width="3"/>'
+                 f'<circle r="5" fill="#fff"><animateMotion dur="6s" repeatCount="indefinite" path="{best_p}"/></circle>')
+    parts.append(f'<circle cx="{X(gens[0]):.0f}" cy="{Y(best[0]):.0f}" r="5" fill="{C["soft"]}"/>')
+    parts.append(text(round(X(gens[0]) + 12), round(Y(best[0]) - 10), f"gen 1: {best[0]}", 13, C['mist'], 'mono'))
+    peak = max(range(len(best)), key=lambda i: best[i])
+    parts.append(f'<circle cx="{X(gens[peak]):.0f}" cy="{Y(best[peak]):.0f}" r="6" fill="#fff" class="pulse"/>')
+    parts.append(text(round(X(gens[peak]) - 12), round(Y(best[peak]) - 14), f"gen {gens[peak]}: {best[peak]:,}", 13, C['silver'], 'mono', 'end'))
+    parts.append(f'<line x1="{x0}" y1="42" x2="{x0 + 28}" y2="42" stroke="{C["soft"]}" stroke-width="3"/>')
+    parts.append(text(x0 + 38, 47, "best brain (avg of 5 games)", 13, C['mist'], 'sans'))
+    parts.append(f'<line x1="{x0 + 260}" y1="42" x2="{x0 + 288}" y2="42" stroke="{C["amber"]}" stroke-width="2" stroke-dasharray="4 4"/>')
+    parts.append(text(x0 + 298, 47, "whole population average", 13, C['mist'], 'sans'))
+    parts.append(text(x1, 47, "SCORE · LOG SCALE", 11, C['soft'], 'mono', 'end', 'letter-spacing="3"'))
+    write("curve.svg", svg(W, H, u, "Learning curve",
+                           f"Best score per generation rose from {best[0]} in generation 1 to {best[peak]:,} in generation {gens[peak]}.", "".join(parts)))
+
+
+VERSUS = []  # filled in main() from brain.json
+
+
+def build_versus():
+    W, H, u = 1200, 330, "vs"
+    parts = [frame(W, H, u, (0.5, 0.5))]
+    for k, (kicker, name, how, rows, colr) in enumerate(VERSUS):
+        x = 40 + k * 572
+        parts.append(f'<rect x="{x}" y="30" width="548" height="270" rx="18" fill="{C["panel"]}" stroke="{C[colr]}" stroke-opacity=".6"/>')
+        parts.append(text(x + 28, 62, kicker, 11, C[colr], 'mono', 'start', 'letter-spacing="3"'))
+        parts.append(text(x + 28, 104, name, 32, C['silver'], 'serif'))
+        parts.append(text(x + 28, 132, how, 15, C['mist'], 'serif', 'start', 'font-style="italic"'))
+        for j, (a, b) in enumerate(rows):
+            y = 172 + j * 34
+            parts.append(f'<line x1="{x + 28}" y1="{y - 22}" x2="{x + 520}" y2="{y - 22}" stroke="{C["line2"]}"/>')
+            parts.append(text(x + 28, y, a, 14, C['muted'], 'sans'))
+            parts.append(text(x + 520, y, b, 15, C['silver'], 'mono', 'end'))
+    parts.append(f'<circle cx="600" cy="165" r="24" fill="{C["bg0"]}" stroke="{C["line2"]}"/>')
+    parts.append(text(600, 171, "VS", 14, C['amber'], 'mono', 'middle', 'font-weight="700"'))
+    write("versus.svg", svg(W, H, u, "Rules vs brain",
+                            "; ".join(f"{n}: " + ", ".join(f"{a} {b}" for a, b in r) for _, n, _, r, _ in VERSUS), "".join(parts)))
+
+
 def main():
     print("building cards →", OUT.relative_to(ROOT))
     build_hero()
@@ -504,6 +622,23 @@ def main():
     build_rules()
     build_lessons()
     build_footer()
+    if NN_BRAIN.exists() and NN_LOG.exists():
+        brain = json.loads(NN_BRAIN.read_text())
+        ex = json.loads((ROOT / "nn" / "exam-results.json").read_text())
+        fair = lambda k: f"{ex[k]['survived']}/{ex[k]['games']} · avg {ex[k]['average']:,}"
+        VERSUS[:] = [
+            ("RULE-BASED · bot.js", "Hand-written rules", "I told it exactly when to jump and duck.",
+             [("Written by", "me, 44 lines"), ("Training time", "none"),
+              (f"Fair exam: survived {ex['minutes']} min", fair("rules")), ("Knows why it jumps?", "yes, I wrote it")], "amber"),
+            ("NEURAL NETWORK · nn/", "Evolved brain", "Nobody told it anything. It learned by dying a lot.",
+             [("Written by", f"evolution, {len(brain['weights'])} weights"),
+              ("Training time", f"{brain['generation']} generations"),
+              (f"Fair exam: survived {ex['minutes']} min", fair("brain")),
+              ("Knows why it jumps?", "honestly, no one does")], "soft"),
+        ]
+        build_network()
+        build_curve()
+        build_versus()
 
 
 if __name__ == "__main__":
