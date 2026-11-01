@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-labelledby="foot-t foot-d">
+<title id="foot-t">Dino Bot</title>
+<desc id="foot-d">Made by Hemashree. If it made you smile, leave a star.</desc>
+
+<style>
+.serif{font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,'Times New Roman',serif}
+.sans{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace}
+.twinkle{animation:tw 4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:.9}}
+.pulse{animation:pl 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pl{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.35)}}
+.float{animation:fl 6s ease-in-out infinite}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.fadein{animation:fi 1.2s ease-out both}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+
+<defs>
+  <radialGradient id="foot-bg" cx="70%" cy="30%" r="90%">
+    <stop offset="0" stop-color="#12241B"/>
+    <stop offset=".55" stop-color="#0C1712"/>
+    <stop offset="1" stop-color="#07100C"/>
+  </radialGradient>
+  <radialGradient id="foot-glowA" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#2FBF71" stop-opacity=".38"/>
+    <stop offset="1" stop-color="#2FBF71" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="foot-glowB" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#F5B461" stop-opacity=".10"/>
+    <stop offset="1" stop-color="#F5B461" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="foot-silver" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#FFFFFF"/>
+    <stop offset=".5" stop-color="#C3D6CB"/>
+    <stop offset="1" stop-color="#7FE0A8"/>
+  </linearGradient>
+  <linearGradient id="foot-rule" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#7FE0A8" stop-opacity="0"/>
+    <stop offset=".25" stop-color="#7FE0A8" stop-opacity=".8"/>
+    <stop offset="1" stop-color="#7FE0A8" stop-opacity="0"/>
+  </linearGradient>
+  <pattern id="foot-grid" width="28" height="28" patternUnits="userSpaceOnUse">
+    <path d="M28 0H0V28" fill="none" stroke="#7FE0A8" stroke-opacity=".05"/>
+  </pattern>
+</defs>
+
+
+<rect x="1" y="1" width="1198" height="298" rx="22" fill="url(#foot-bg)" stroke="#1C3529"/>
+<rect x="1" y="1" width="1198" height="298" rx="22" fill="url(#foot-grid)"/>
+<ellipse cx="600" cy="225" rx="420" ry="210" fill="url(#foot-glowA)"/>
+<ellipse cx="600" cy="75" rx="300" ry="150" fill="url(#foot-glowB)"/>
+<circle class="twinkle" cx="743" cy="213" r="0.8" fill="#E8F1EC" style="animation-delay:3.4s"/>
+<circle class="twinkle" cx="920" cy="85" r="0.8" fill="#E8F1EC" style="animation-delay:3.6s"/>
+<circle class="twinkle" cx="151" cy="142" r="1" fill="#E8F1EC" style="animation-delay:1.5s"/>
+<circle class="twinkle" cx="138" cy="85" r="1" fill="#E8F1EC" style="animation-delay:1.6s"/>
+<circle class="twinkle" cx="231" cy="246" r="1.6" fill="#E8F1EC" style="animation-delay:0.6s"/>
+<circle class="twinkle" cx="945" cy="56" r="1.6" fill="#E8F1EC" style="animation-delay:0.5s"/>
+<circle class="twinkle" cx="22" cy="247" r="1" fill="#E8F1EC" style="animation-delay:3.1s"/>
+<circle class="twinkle" cx="1134" cy="63" r="1" fill="#E8F1EC" style="animation-delay:1.2s"/>
+<circle class="twinkle" cx="1135" cy="160" r="1" fill="#E8F1EC" style="animation-delay:0.7s"/>
+<circle class="twinkle" cx="1144" cy="71" r="1.6" fill="#E8F1EC" style="animation-delay:1.2s"/>
+<circle class="twinkle" cx="439" cy="63" r="1" fill="#E8F1EC" style="animation-delay:1.1s"/>
+<circle class="twinkle" cx="405" cy="233" r="0.8" fill="#E8F1EC" style="animation-delay:2.4s"/>
+<circle class="twinkle" cx="841" cy="37" r="1.2" fill="#E8F1EC" style="animation-delay:3.3s"/>
+<circle class="twinkle" cx="578" cy="102" r="1.6" fill="#E8F1EC" style="animation-delay:1.9s"/>
+<circle class="twinkle" cx="224" cy="87" r="0.8" fill="#E8F1EC" style="animation-delay:3.8s"/>
+<circle class="twinkle" cx="435" cy="125" r="1.6" fill="#E8F1EC" style="animation-delay:1.5s"/>
+<circle class="twinkle" cx="691" cy="22" r="0.8" fill="#E8F1EC" style="animation-delay:2.8s"/>
+<circle class="twinkle" cx="744" cy="268" r="0.8" fill="#E8F1EC" style="animation-delay:3.0s"/>
+<circle class="twinkle" cx="1098" cy="265" r="1.2" fill="#E8F1EC" style="animation-delay:2.0s"/>
+<circle class="twinkle" cx="1056" cy="85" r="1.6" fill="#E8F1EC" style="animation-delay:0.4s"/>
+<circle class="twinkle" cx="888" cy="227" r="1.2" fill="#E8F1EC" style="animation-delay:0.1s"/>
+<circle class="twinkle" cx="1117" cy="44" r="1.2" fill="#E8F1EC" style="animation-delay:2.1s"/>
+<circle class="twinkle" cx="441" cy="59" r="1.2" fill="#E8F1EC" style="animation-delay:3.7s"/>
+<circle class="twinkle" cx="652" cy="101" r="1.2" fill="#E8F1EC" style="animation-delay:1.2s"/>
+<circle class="twinkle" cx="947" cy="183" r="1.2" fill="#E8F1EC" style="animation-delay:4.0s"/>
+<circle class="twinkle" cx="207" cy="33" r="1.6" fill="#E8F1EC" style="animation-delay:0.1s"/>
+<circle class="twinkle" cx="879" cy="109" r="1.2" fill="#E8F1EC" style="animation-delay:1.8s"/>
+<circle class="twinkle" cx="509" cy="34" r="0.8" fill="#E8F1EC" style="animation-delay:3.2s"/>
+<circle class="twinkle" cx="408" cy="74" r="1" fill="#E8F1EC" style="animation-delay:2.5s"/>
+<circle class="twinkle" cx="934" cy="48" r="1.6" fill="#E8F1EC" style="animation-delay:1.5s"/>
+<text x="600" y="64" class="mono" font-size="12" fill="#7FE0A8" text-anchor="middle" letter-spacing="4">A WEEKEND PROJECT · BUILT FOR FUN AND LEARNING</text>
+<text x="600" y="164" class="serif" font-size="88" font-style="italic" text-anchor="middle" fill="url(#foot-silver)" letter-spacing="2">Dino Bot</text>
+<text x="600" y="164" class="serif" font-size="88" font-style="italic" text-anchor="middle" fill="none" stroke="#fff" stroke-width="1.4" stroke-dasharray="120 900" letter-spacing="2" opacity=".8">Dino Bot<animate attributeName="stroke-dashoffset" values="1020;0" dur="6s" repeatCount="indefinite"/></text>
+<rect x="380" y="192" width="440" height="1.2" fill="url(#foot-rule)"/>
+<text x="600" y="232" class="sans" font-size="15" fill="#C3D6CB" text-anchor="middle" >Made by Hemashree · B.Tech CSE, VIT Chennai</text>
+<text x="600" y="266" class="serif" font-size="18" fill="#F5B461" text-anchor="middle" font-style="italic">If it made you smile, leave a star ★</text>
+
+</svg>
