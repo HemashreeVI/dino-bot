@@ -1,0 +1,14 @@
+{
+  "name": "dino-bot",
+  "version": "1.0.0",
+  "description": "A small bot that plays the Chrome Dino game by itself",
+  "main": "play.js",
+  "scripts": {
+    "play": "node play.js",
+    "record": "node play.js --record --headless"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.50.0"
+  }
+}
